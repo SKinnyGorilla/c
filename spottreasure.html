@@ -31,6 +31,28 @@
   position: absolute;
   bottom: 10px;
   left: 10px;
+  z-index: 1;
+}
+#qatar-search-input {
+  width: 300px;
+  padding: 10px;
+  border: black;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+  font-size: 16px;
+  color: #333;  
+}
+
+#qatar-search-container button {
+  margin-top: 10px; 
+  margin-left: 10px;
+  padding: 10px 20px;
+  background-color: #007bff;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer; 
 }
 @media (max-width: 480px) {
     #search-container {
@@ -51,15 +73,35 @@
     }
   }
   
+  @media (max-width: 480px) {
+
+#qatar-search-container {
+  position: static;
+  margin-bottom: 10px;
+}
+
+#qatar-search-input {
+  width: 100%;
+  height: 29px;
+  padding: 14px;
+}
+
+#qatar-search-container button {
+  margin-left: 0;
+  display: block;
+  width: 100%;
+}
+
+}
 
 #search-input {
   width: 300px;
   padding: 10px;
-  border: none;
+  border:black;
   border-radius: 5px;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-size: 16px;
-  color: #333;
+  color: #000000;
 }
 
 #search-container button {
@@ -147,11 +189,23 @@
       background-size: cover;
       background-position: center;
     }
+    .qatar {
+      color: #ffffff;
+      font-family: mon;
+      background-image: url("https://aeroports-de-lyon.imgix.net/sites/default/files/2023-03/doha_qatar_skyline.jpg?fit=max&ixlib=php-3.3.1&w=900&s=ea69f4aad4762096770c2a6b90fbd9cf");
+      background-repeat: no-repeat;
+      background-size: cover;
+      background-position: center;
+    }
 
     .places {
       display: none;
       text-align: center;
     }
+
+    #qatar-places {
+  display: none; 
+}
 
     .place {
       display: inline-block;
@@ -223,13 +277,35 @@
     }
   </style>
   <script>
-
-function togglePlacesVisibility() {
+    function togglePlacesVisibility() {
+      
       var places = document.getElementById('places');
       var placesDisplay = places.style.display;
       places.style.display = placesDisplay === 'block' ? 'none' : 'block';
     }
 
+
+
+    // Track visibility state
+
+function toggleQatarPlacesVisibility() {
+
+  // Get Qatar places div
+  var qatarPlaces = document.getElementById('qatar-places');
+
+  if(!isVisible) {
+    qatarPlaces.style.display = 'block';
+    isVisible = true;
+  } else {
+    qatarPlaces.style.display = 'none';
+    isVisible = false;
+  }
+
+}
+
+
+
+    
     function showPlaceDetails(placeId) {
       var placeDetails = document.getElementById('place-details-' + placeId);
       var placePhotos = document.getElementById('place-photos-' + placeId);
@@ -279,6 +355,39 @@ function togglePlacesVisibility() {
       var details = document.getElementById("place" + place + "-details");
       details.style.display = "block";
     }
+
+    var isVisible = false; 
+    var placeDetailsVisible = false;
+
+// Track Qatar places visibility
+var qatarPlacesVisible = false;
+
+function showQatarPlaceDetails(placeNum) {
+
+// Get place details elements
+var details = document.getElementById("qatar-place-details-" + placeNum);
+var photos = document.getElementById("qatar-place-photos-" + placeNum);
+
+if(!placeDetailsVisible) {
+  // Show details
+  details.style.display = "block";
+  photos.style.display = "block";
+
+  placeDetailsVisible = true;
+
+} else {
+  // Hide details
+  details.style.display = "none";
+  photos.style.display = "none";
+
+  placeDetailsVisible = false;
+}
+
+}
+
+
+
+
     function searchPlaces(keyword) {
   // Get all the place elements
   const placeElements = document.getElementsByClassName('place');
@@ -305,8 +414,42 @@ searchPlaces('Kuwait');
       var photos = document.getElementById("place" + place + "-photos");
       photos.style.display = "block";
     }
-    
 
+
+    function searchQatarPlaces() {
+
+      var query = document.getElementById("qatar-search-input").value;
+      if (query.trim() === '') {
+    
+    // Refresh page if empty
+    location.reload();
+
+  } else {
+
+    // Search logic
+    // ...
+
+  }
+
+// Get search input
+var search = document.getElementById('qatar-search-input').value;
+
+// Get all place elements
+var places = document.getElementsByClassName('place');
+
+// Loop through places and show/hide based on search
+for(var i = 0; i < places.length; i++) {
+  var placeName = places[i].querySelector('.place-name').innerText;
+  if(placeName.toLowerCase().includes(search.toLowerCase())) {
+    places[i].style.display = 'block';
+  } else {
+    places[i].style.display = 'none';
+  }
+}
+
+}
+let placesVisible = false;
+    
   </script>
 </head>
 <body>
@@ -318,7 +461,154 @@ searchPlaces('Kuwait');
     <h2 class="countries-heading">الدول</h2>
     <ul id="countries">
       <li class="country kuwait" onclick="togglePlacesVisibility()">الكويت</li>
+      <li class="country qatar" onclick="toggleQatarPlacesVisibility()">قطر</li>
+
     </ul>
+
+        <div id="qatar-places" class="places">
+
+      <h2>اماكن في قطر</h2>
+
+      <div id="qatar-search-container">
+
+        <input type="text" id="qatar-search-input" placeholder="بحث...">
+      <button onclick="searchQatarPlaces()">بحث</button>
+      </div>
+
+      <div>
+
+
+
+
+              <!--متحف الشيخ فيصل بن قاسم الثاني-->
+              <div class="place" onclick="showQatarPlaceDetails(6)">
+                <img class="place-image" src="https://cimam.org/media/images/f-33-263-17100954_PTLiI3KL_9R6A7940_QECA.width-2480.jpg" alt="Place Image">
+                <h3 class="place-name">متحف الشيخ فيصل بن قاسم آل ثاني</h3>
+                 <div class="rating">
+                  التقييم: 4.6
+                 </div>
+              </div>
+               <div id="qatar-place-details-6" class="place-details">
+                <p class="place-description">
+                  يقع هذا المتحف الخاص في مزرعة السمرية، ويعرض مجموعة مدهشة من القطع الأثرية من جميع أنحاء العالم. يضم فنوناً إسلامية وسيارات كلاسيكية وقطع أثرية قطرية تاريخية، بالإضافة إلى مجموعة واسعة من المخطوطات الإسلامية.</p>
+                 <p class="place-location">الموقع: <a href="https://goo.gl/maps/LseAWQaxS3wfigAD9" target="_blank">الموقع على جوجل مابز</a></p>
+                 <div id="qatar-place-photos-6" class="place-photos">
+                  <img class="place-photo" src="https://c.regencyholidays.com/blog/blog/content/images/2021/07/Car-Museum.jpg" alt="Photo 1">
+                  <img class="place-photo" src="https://cdn2.advanceinfotech.org/doha.directory/1200x675/business/59/alsamriyaestate9-1649916732.webp" alt="Photo 2">
+                  <img class="place-photo" src="https://visitqatar.com/content/dam/visitqatar/img/things-to-do/art-culture/museums-galleries/museums/sheikh-faisal-bin-qassim-al-thani-museum.jpg/_jcr_content/renditions/medium-1280px.jpeg" alt="Photo 3">
+                  <img class="place-photo" src="https://d12eu00glpdtk2.cloudfront.net/public/images/vintage-cars-sheikh-faisal-shutterstock_2135271869-min.jpg" alt="Photo 4">
+                </div>
+               </div>
+
+
+
+              <!--متحف الفن الاسلامي-->
+              <div class="place" onclick="showQatarPlaceDetails(5)">
+                <img class="place-image" src="https://c.myholidays.com/blog/blog/content/images/2020/12/Museum-of-Islamic-Art.jpg" alt="Place Image">
+                <h3 class="place-name">متحف الفن الاسلامي</h3>
+                 <div class="rating">
+                  Rating: 4.5
+                 </div>
+              </div>
+               <div id="qatar-place-details-5" class="place-details">
+                <p class="place-description">
+                  صمم هذا المتحف من قبل المهندس المعروف آي. إم. بي، ويحتوي على مجموعة واسعة من الفن الإسلامي من جميع أنحاء العالم. يتضمن المعروضات فترة تاريخية تمتد لمدة 1400 عام، وتشمل المخطوطات والسيراميك والمنسوجات والمجوهرات والحِليات المعدنية.</p>
+                 <p class="place-location">الموقع: <a href="https://goo.gl/maps/BbkNTe2bvudm3U6X8" target="_blank">الموقع على جوجل مابز</a></p>
+                 <div id="qatar-place-photos-5" class="place-photos">
+                  <img class="place-photo" src="https://lp-cms-production.imgix.net/2019-06/6b214700c4874a8b5d3f3de689d1f072-museum-of-islamic-art.jpg" alt="Photo 1">
+                  <img class="place-photo" src="https://images.museumwnf.org/full/museums/qt/21/3.jpg" alt="Photo 2">
+                  <img class="place-photo" src="https://i.guim.co.uk/img/static/sys-images/Guardian/Pix/pictures/2008/11/24/islamic-art-museum460x276.jpg?width=465&dpr=1&s=none" alt="Photo 3">
+                  <img class="place-photo" src="https://cdn.goppion.com/uploads/images/Projects/legacy/_projectIntroImage/cairo-islamic-07.jpg" alt="Photo 4">
+                </div>
+               </div>
+
+
+              <!--حديقة اسباير-->
+              <div class="place" onclick="showQatarPlaceDetails(4)">
+                <img class="place-image" src="https://www.aspirezone.qa/content/home/5.jpeg" alt="Place Image">
+                <h3 class="place-name">اسباير بارك</h3>
+                 <div class="rating">
+                  التقييم: 4.7
+                 </div>
+              </div>
+               <div id="qatar-place-details-4" class="place-details">
+                <p class="place-description">
+                  يقع هذا الحديقة الواسعة بالقرب من منطقة أسباير في الدوحة، وتوفر مكانًا هادئًا ومريحًا مع أشجار خضراء غناء وممرات للمشي وبحيرة ومناطق للعب. إنها النقطة المثالية للنزهات والجري والاسترخاء.</p>
+                 <p class="place-location">الموقع: <a href="https://goo.gl/maps/AQiLQKfiMUUZbmow9" target="_blank">الموقع على على جوجل مابز</a></p>
+                 <div id="qatar-place-photos-4" class="place-photos">
+                  <img class="place-photo" src="https://a.travel-assets.com/findyours-php/viewfinder/images/res70/482000/482080-Aspire-Park.jpg" alt="Photo 1">
+                  <img class="place-photo" src="https://www.timeoutdoha.com/cloud/timeoutdoha/2021/09/13/parks-doha-Aspire-Park.jpg" alt="Photo 2">
+                  <img class="place-photo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS3N3Rv2-Ewk6cMku-5_iKTXoN3Pszd7aPZ1w&usqp=CAU" alt="Photo 3">
+                  <img class="place-photo" src="data:image/jpeg;base64,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" alt="Photo 4">
+                </div>
+               </div>
+
+
+              <!--كاتارا-->
+              <div class="place" onclick="showQatarPlaceDetails(3)">
+                <img class="place-image" src="https://www.accessibleqatar.com/wp-content/uploads/2016/05/katara_photo_big_1-1201x800.jpg" alt="Place Image">
+                <h3 class="place-name">قرية كاتارا الثقافية</h3>
+                 <div class="rating">
+                  التقييم: 4.7
+                 </div>
+              </div>
+               <div id="qatar-place-details-3" class="place-details">
+                <p class="place-description">
+                  هذا المجمع الثقافي يعرض تراث قطر ويستضيف معارض فنية متنوعة وحفلات موسيقية وعروض مسرحية. يتميز بشاطئ ساحر، ومدرج مسرحي، وصالات عرض فنية، والعديد من خيارات الطعام.</p>
+                 <p class="place-location">الموقع: <a href="https://goo.gl/maps/qJxhL17aZJWEsYAVA" target="_blank">الموقع على جوجل مابز</a></p>
+                 <div id="qatar-place-photos-3" class="place-photos">
+                  <img class="place-photo" src="https://media.cnn.com/api/v1/images/stellar/prod/230314141028-60-second-vacation-qatar-katara-cultural-illage.jpg?c=original" alt="Photo 1">
+                  <img class="place-photo" src="https://c.regencyholidays.com/blog/blog/content/images/2021/07/Katara-Cultural-Village.jpg" alt="Photo 2">
+                  <img class="place-photo" src="https://dynamic-media-cdn.tripadvisor.com/media/photo-o/1a/6f/c0/b8/photo0jpg.jpg?w=200&h=-1&s=1" alt="Photo 3">
+                  <img class="place-photo" src="https://cnn-arabic-images.cnn.io/cloudinary/image/upload/w_780,h_439,c_fill,q_auto/cnnarabic/2018/02/05/images/55163.jpg" alt="Photo 4">
+                </div>
+               </div>
+
+              <!--كورنيش الدوحة-->
+              <div class="place" onclick="showQatarPlaceDetails(2)">
+                <img class="place-image" src="https://www.omallqura.com/wp-content/uploads/2018/04/doha-corniche1.jpg" alt="Place Image">
+                <h3 class="place-name">كورنيش الدوحة</h3>
+                <div class="rating">
+                  التقييم: 4.7
+                 </div>
+              </div>
+               <div id="qatar-place-details-2" class="place-details">
+                <p class="place-description">
+                  هذا الممشى الساحلي الخلاب يمتد لعدة كيلومترات على طول خليج الدوحة. يوفر إطلالات خلابة على أفق المدينة، ومسارات للمشي والجري، وحدائق، والعديد من المقاهي والمطاعم.</p>
+                <p class="place-location">الموقع: <a href="https://goo.gl/maps/BQ5sbyXc1uPXM9A78" target="_blank">الموقع على جوجل مابز</a></p>
+                <div id="qatar-place-photos-2" class="place-photos">
+                   <img class="place-photo" src="https://www.saaih.com/files/travel/%D9%82%D8%B7%D8%B1/%D8%A7%D9%84%D8%AF%D9%88%D8%AD%D8%A9/doha-corniche-qatar.jpg" alt="Photo 1">
+                  <img class="place-photo" src="https://www.aljazeera.net/wp-content/uploads/2022/10/shutterstock_2216440937.jpg?resize=770%2C513&quality=80" alt="Photo 2">
+                  <img class="place-photo" src="https://www.alaraby.co.uk/sites/default/files/styles/meduim_16_9/public/2022-10/GettyImages-1243808879.jpg?h=199d8c1f&itok=44_tqmue" alt="Photo 3">
+                  <img class="place-photo" src="https://artravelers.com/tourism/media/images/18/05/11/6d6cf4746d.jpg" alt="Photo 4">
+                </div>
+               </div>
+
+              <!--سوق واقف-->
+              <div class="place" onclick="showQatarPlaceDetails(1)">
+                <img class="place-image" src="https://upload.wikimedia.org/wikipedia/commons/5/57/Souq_Waqif%2C_Doha%2C_Catar%2C_2013-08-05%2C_DD_84.JPG" alt="Place Image">
+                <h3 class="place-name">سوق واقف</h3>
+                <div class="rating">
+                  التقييم: 4.7
+                </div>
+              </div>
+              <div id="qatar-place-details-1" class="place-details">
+                <p class="place-description">
+                  
+سوق واقف هو سوق قديم في الدوحة ، فيه متاجر صغيرة في الأزقة تبيع التوابل والملابس والهدايا والذهب. أصحاب المتاجر يتفاوضون مع العملاء. تقدم المطاعم الطعام التقليدي . في الليل توجد أضواء وموسيقى. تتجول يمكنك رؤية الجمال والصقور والمصابيح والمزيد. يبدو الأمر وكأنه العصور القديمة ويظهر ثقافة قطر.</p>
+                <p class="place-location">الموقع: <a href="https://goo.gl/maps/tYe3qo4wQDyiXix28" target="_blank">الموقع على جوجل مابز</a></p>
+                <div id="qatar-place-photos-1" class="place-photos">
+                  <img class="place-photo" src="https://www.qna.org.qa/qnacdn.azureedge.net/-/media/Project/QNA/QNAImages/2022-11/08/QNA-Souq-Waqif-world-cup-08112022.jpg?modified=00010101000000" alt="Photo 1">
+                  <img class="place-photo" src="https://alarab.qa/get/maximage/20171102_1509614944-358271.jpg" alt="Photo 2">
+                  <img class="place-photo" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcT4XPxgoVSEEvto2yesHrLe_lcAh5bL04xc1_Y5878GNT_4S9RQmRGVn5FBNp2JXoHywbs&usqp=CAU" alt="Photo 3">
+                  <img class="place-photo" src="https://www.pullman-doha-westbay.com/wp-content/uploads/sites/127/2020/04/SOUQ-WAQIF.jpg" alt="Photo 4">
+                </div>
+              </div>
+      </div>
+
+      
+    </div>
+
 
     <div id="places" class="places">
       <h2>اماكن في الكويت</h2>
