@@ -293,11 +293,12 @@ function toggleQatarPlacesVisibility() {
 
   // Get Qatar places div
   var qatarPlaces = document.getElementById('qatar-places');
-  qatarPlaces.scrollIntoView({behavior: "smooth"});
+  
 
   if(!isVisible) {
     qatarPlaces.style.display = 'block';
     isVisible = true;
+    qatarPlaces.scrollIntoView({behavior: "smooth"});
   } else {
     qatarPlaces.style.display = 'none';
     isVisible = false;
