@@ -282,6 +282,7 @@
       var places = document.getElementById('places');
       var placesDisplay = places.style.display;
       places.style.display = placesDisplay === 'block' ? 'none' : 'block';
+      places.scrollIntoView({behavior: "smooth"});
     }
 
 
@@ -292,6 +293,7 @@ function toggleQatarPlacesVisibility() {
 
   // Get Qatar places div
   var qatarPlaces = document.getElementById('qatar-places');
+  qatarPlaces.scrollIntoView({behavior: "smooth"});
 
   if(!isVisible) {
     qatarPlaces.style.display = 'block';
