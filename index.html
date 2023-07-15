@@ -27,8 +27,6 @@
       position: relative; /* Added */
       height:75px;
       text-align: center;
-      display:flex;
-      align-items:center;
     }
 
     #search-container {
@@ -113,6 +111,20 @@ h1 {
 }
 
 }
+@media (max-width: 480px) {
+
+.logo-wrapper {
+  position: static;
+  text-align: center;
+}
+
+h1 {
+  max-width: 300px; 
+  margin-left: auto;
+  margin-right: auto;
+}
+
+}
 
 
 }
@@ -146,7 +158,6 @@ h1 {
     h1 {
       color: #fff;
       white-space: nowrap;
-      margin:0 auto;
       margin-top: 20px;
       margin-left: 0;
       max-width: 300px;
