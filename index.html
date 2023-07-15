@@ -14,7 +14,7 @@
 
 
     .Treasure {
-      color:#ffd557;
+      color:#ffd862
     }
 
     header {
@@ -27,9 +27,8 @@
       position: relative; /* Added */
       height:75px;
       text-align: center;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+      display:flex;
+      align-items:center;
     }
 
     #search-container {
@@ -59,15 +58,10 @@
   font-size: 16px;
   cursor: pointer; 
 }
-
 @media (max-width: 480px) {
     #search-container {
       position: static;
       margin-bottom: 10px;
-    }
-    .logo-wrapper {  
-    position: static;
-    transform: none;
     }
 
     #search-input {
@@ -82,6 +76,7 @@
       width: 100%;
     }
   }
+  
   @media (max-width: 480px) {
 
 #qatar-search-container {
@@ -105,50 +100,35 @@
     font-size: 28px;
   }
 }
-/* Add this CSS */
+@media (max-width: 768px) {
 
 header {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
+  justify-content: center; 
 }
 
-@media (max-width: 480px) {
-
-  header {
-    flex-direction: column;
-  }
-  
-  h1 {
-    margin-bottom: 10px; 
-  }
-
-}
-}
-
-@media (max-width: 480px) {
-
-.logo-wrapper {
+h1 {
   position: static;
-  transform: none;
+  font-size: 1.5rem;
 }
+
+}
+
 
 }
 
 #search-input {
   width: 300px;
   padding: 10px;
-  border: black;
+  border:black;
   border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   font-size: 16px;
-  color: #333;
+  color: #000000;
 }
 
 #search-container button {
   margin-top: 10px;
-  margin-left: 10px;
-  padding: 5px 10px;
   padding: 10px 20px;
   background-color: #007bff;
   border: none;
@@ -166,6 +146,7 @@ header {
     h1 {
       color: #fff;
       white-space: nowrap;
+      margin:0 auto;
       margin-top: 20px;
       margin-left: 0;
       max-width: 300px;
@@ -176,7 +157,7 @@ header {
       left: 50%;
       transform: translateX(-50%);
       transition:0.4s;
-      width:auto;
+      width: auto;
     }
 
     h1:hover {
@@ -184,11 +165,11 @@ header {
   left: 50% !important;  
 }
 .logo-wrapper {
-  position: absolute;
   left: 50%;
   transform: translateX(-50%);
+  margin:auto;
+  position:absolute;
 }
-    
 
     #arabic-button {
       background-color:#fff;
@@ -198,7 +179,7 @@ header {
       position: absolute;
       top: 10px;
       right: 10px;
-      font-size: 18px;
+      font-size: 14px;
       font-weight: bold;
       color: #333;
       cursor: pointer;
@@ -238,7 +219,7 @@ header {
     .country {
       cursor: pointer;
       display: inline-block;
-      padding: 45px 39px;
+      padding: 45px 60px;
       font-size: 65px;
       font-weight: bold;
       border-radius: 10px;
@@ -257,7 +238,6 @@ header {
       background-size: cover;
       background-position: center;
     }
-
     .qatar {
       color: #ffffff;
       font-family: mon;
@@ -271,9 +251,11 @@ header {
       display: none;
       text-align: center;
     }
+
     #qatar-places {
   display: none; 
 }
+
     .place {
       display: inline-block;
       width: 280px;
@@ -360,6 +342,7 @@ function toggleQatarPlacesVisibility() {
 
   // Get Qatar places div
   var qatarPlaces = document.getElementById('qatar-places');
+  
 
   if(!isVisible) {
     qatarPlaces.style.display = 'block';
@@ -523,9 +506,9 @@ let placesVisible = false;
 </head>
 <body>
   <header>
-      <div class="logo-wrapper">  
-        <h1>Spot<span class="Treasure">Treasure</span></h1>
-      </div>
+    <div class="logo-wrapper">
+    <h1 onclick="refreshPage()">Spot<span class = "Treasure"> Treasure</span></h1>
+  </div>
     <div id="arabic-button" onclick="redirectToArabicVersion()">ع</div>
   </header>
   <main>
