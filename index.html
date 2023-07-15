@@ -27,6 +27,9 @@
       position: relative; /* Added */
       height:75px;
       text-align: center;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
 
     #search-container {
@@ -98,17 +101,23 @@
     font-size: 28px;
   }
 }
-@media (max-width: 768px) {
+/* Add this CSS */
 
 header {
   display: flex;
-  justify-content: center; 
+  justify-content: space-between;
+  align-items: center;
 }
 
-h1 {
-  position: static;
-  font-size: 1.5rem;
-}
+@media (max-width: 480px) {
+
+  header {
+    flex-direction: column;
+  }
+  
+  h1 {
+    margin-bottom: 10px; 
+  }
 
 }
 }
